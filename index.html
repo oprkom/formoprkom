@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Online Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <title>KTMB vForm(KTMB Various Form)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('myForm').addEventListener('submit', function(event) {
@@ -50,5 +54,77 @@
         <input type="submit" value="Submit">
     </form>
     <div id="successMessage"></div>
+    <div class="content-wrapper container-xxl p-0">
+            <div class="row" id="progressMain" style="display: none;">
+                <div class="demo-inline-spacing">
+                    <div>
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="spinner-border" style="width: 3rem; height: 3rem" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="spinner-grow" style="width: 3rem; height: 3rem" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+<div class="content-body">
+    <section id="basic-horizontal-layouts">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row col-12">
+                            <div class="col-4"><img src="https://www.ktmb.com.my/assets/img/logo_miniktm.png"></div>
+                            <div class="col-7"><h4>Keretapi Tanah Melayu Berhad</h4></div>
+                            <div class="col-1">
+                                <a href="/bpc/Home/Index" class="btn-icon btn btn-primary btn-round btn-sm waves-effect waves-float waves-light"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-left"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg></a>
+                            </div>
+                            <br>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="sortHeader" class="" method="post" autocomplete="off" enctype="multipart/form-data">
+                            <div class="row" id="PsortHeader"><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> Tarikh &nbsp;*</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-1" name="230310000000ITEAS-1" class="form-control flatpickr-basic flatpickr-input" placeholder="YYYY-MM-DD" value="" required="" readonly="readonly"></div></div></div><div class="form-group row"><label class="col-sm-8 col-form-label"> <b>SPOT Interface Batch</b></label></div><div class="form-group row"><label class="col-sm-8 col-form-label"> <b>LOG</b></label></div><div class="form-group row"><label class="col-sm-8 col-form-label"> 01 - SPOT Interface Batch Programs</label></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 01 - INVOICE INTERFACE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-5" name="230310000000ITEAS-5" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 02 - RECEIPT INTERFACE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-6" name="230310000000ITEAS-6" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 03 - CUSTOMER INTERFACE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-7" name="230310000000ITEAS-7" class="form-control" value=""></div></div></div><div class="form-group row"><label class="col-sm-8 col-form-label"> <b>RUN</b></label></div><div class="form-group row"><label class="col-sm-8 col-form-label"> 02 - SPOT General Batch Programs</label></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 03 - GENERATE DAILY TIMETABLE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-10" name="230310000000ITEAS-10" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 06 - CALCULATE DEMURAGE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-11" name="230310000000ITEAS-11" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 07 - POPULATE COMMUTER TRAIN &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-12" name="230310000000ITEAS-12" class="form-control" value=""></div></div></div><div class="form-group row"><label class="col-sm-8 col-form-label"> 03 - SPOT REPORT BATCH PROGRAMS</label></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 03 - REVENUE PER NET TON KM FOR FREIGHT TRAIN &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-14" name="230310000000ITEAS-14" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 04 - NET TON,TON-KM BY COMMUDITY FOR FREIGHT TRAIN &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-15" name="230310000000ITEAS-15" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 06 - REVENUE FOR FREIGHT TRAIN &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-16" name="230310000000ITEAS-16" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 07 - PERODIAL FREIGHT STATS &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-17" name="230310000000ITEAS-17" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 08 - PUNCTUALITY DATA &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-18" name="230310000000ITEAS-18" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 09 - LOCOMOTIVE STATISTIC &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-19" name="230310000000ITEAS-19" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 11 - TRAIN EQUIPMENT TRACKING &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-20" name="230310000000ITEAS-20" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 13 - TURNAROUND STATISTIC &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-21" name="230310000000ITEAS-21" class="form-control" value=""></div></div></div><div class="form-group row"><label class="col-sm-8 col-form-label"> <b>Finance Oracle Batch Interface</b></label></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 07 - UPDATE CUSTOMER &amp; CONTACT DETAILS &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-23" name="230310000000ITEAS-23" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 08 - UPDATE NATURAL ACCOUNT CODE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-24" name="230310000000ITEAS-24" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 09 - UPDATE COST CENTER CODE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-25" name="230310000000ITEAS-25" class="form-control" value=""></div></div></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> 10 - UPDATE EXCHANGE RATE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-26" name="230310000000ITEAS-26" class="form-control" value=""></div></div></div><div class="form-group row"><label class="col-sm-8 col-form-label"> <b>OTHERS</b></label></div><div class="col-lg-6 col-md-6 col-12"><div class="mb-1 row"><div class="col-sm-4"><label class="col-form-label" for="email-id"> TIMBERLINE &nbsp;</label></div><div class="col-sm-8"><input type="text" id="230310000000ITEAS-28" name="230310000000ITEAS-28" class="form-control" value=""></div></div></div></div>
+                        </form>
+                        
+                        <form id="sortBodt" class="" method="post" autocomplete="off" enctype="multipart/form-data">
+                            <div class="row" id="PsortBodt"></div>
+                        </form>
+                        
+                        <form id="sortFoot" class="" method="post" autocomplete="off" enctype="multipart/form-data">
+                            <div class="row" id="PsortFoot"></div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-sm-10 ml-auto">
+                            <button type="button" id="SimpanB" name="SimpanB" class="btn btn-primary me-1 waves-effect waves-float waves-light">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+        </div>
 </body>
 </html>

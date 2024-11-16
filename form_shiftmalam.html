@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keretapi Tanah Melayu Berhad</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('myForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                 var formData = {
+                    date: document.getElementById('date').value,
+                    update_customer: document.getElementById('update_customer').value,
+                     update_natural: document.getElementById('update_natural').value,
+                      update_cost: document.getElementById('update_cost').value,
+                      update_exchange: document.getElementById('update_exchange').value
+
+                };
+                fetch('https://script.google.com/macros/s/AKfycbw7I1cdPiUuTeTt6i4pRJXNyTu67bWxJMbbL2D0ZHZWQhAoIztT_tbx1IxKG4DC88MV9A/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                     .then(response => response.text())
+.then(data => {
+    console.log(data);
+    showSuccessDialog();
+})
+.catch(error => {
+    console.error('Error:', error);
+    showSuccessDialog();
+});
+            });
+        });
+        function showSuccessDialog() {
+    // Create the dialog elements
+    const dialog = document.createElement('div');
+    const message = document.createElement('p');
+    const button = document.createElement('button');
+
+    // Set the dialog styles
+    dialog.style.position = 'fixed';
+    dialog.style.top = '50%';
+    dialog.style.left = '50%';
+    dialog.style.transform = 'translate(-50%, -50%)';
+    dialog.style.padding = '20px';
+    dialog.style.backgroundColor = 'white';
+    dialog.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+    dialog.style.zIndex = '1000';
+
+    // Set the message text
+    message.innerText = 'Form submitted successfully!';
+
+    // Set the button text and click event
+    button.innerText = 'OK';
+    button.onclick = function() {
+        window.location.href = 'index.html';
+    };
+
+    // Append elements to the dialog
+    dialog.appendChild(message);
+    dialog.appendChild(button);
+
+    // Append the dialog to the body
+    document.body.appendChild(dialog);
+}
+    </script>
+    <style>
+        .content-body {
+            padding: 40px;
+        }
+
+        .card-body {
+            height: 685px;
+            display: flex; /* Use Flexbox for side-by-side layout */
+            gap: 20px; /* Add space between navigation and form */
+        }
+
+        .card-navi {
+            width: 200px;
+            background-color: #f8f9fa; /* Light grey */
+            padding: 10px;
+            border: 1px solid #ddd; /* Border for separation */
+            border-radius: 5px;
+        }
+
+        .card-navi a {
+            display: block;
+            color: #000;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card-navi a:hover {
+            background-color: #495057; /* Slightly darker background */
+            color: #fff; /* White text */
+        }
+
+        .card-form {
+            flex: 1; /* Take up the remaining space */
+        }
+
+        .form-control[readonly] {
+            background-color: #e9ecef; /* Style for read-only inputs */
+            opacity: 1;
+        
+        }
+         .btn-submit {
+            display: inline-block;
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="content-body">
+        <section id="basic-horizontal-layouts">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <img src="https://www.ktmb.com.my/assets/img/logo_miniktm.png" alt="KTM Logo">
+                                </div>
+                                <div class="col-7">
+                                    <h4>Keretapi Tanah Melayu Berhad</h4>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <!-- Navigation Section -->
+                            <div class="card-navi">
+                               <a href="index.html">Home</a>
+                                <a href="#form">Form</a>
+                                <a href="log_data.html">Log Data</a>
+                            </div>
+
+                            <!-- Form Section -->
+                            <div class="card-form">
+                                <form id="myForm">
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="mb-1 row align-items-center">
+                                                <label for="date" class="col-sm-4 col-form-label">Date</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label"> <b>Finance Oracle Batch Interface</b>
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="mb-1 row">
+                                            <div class="col-sm-4">
+                                                <label class="col-form-label"> 07 - UPDATE CUSTOMER CONTACT DETAILS </label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="text" id="update_customer" name="update_custome" class="form-control" required>
+                                            </div>
+                                        </div></div>
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="mb-1 row">
+                                                <div class="col-sm-4">
+                                                    <label class="col-form-label" > 08 - UPDATE NATURAL ACCOUNT CODE </label>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="update_natural" name="update_natural" class="form-control" required>
+                                                </div>
+                                            </div></div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="mb-1 row">
+                                                    <div class="col-sm-4">
+                                                        <label class="col-form-label"> 09 - UPDATE COST CENTER CODE </label>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" id="update_cost" name="update_cost" class="form-control" required>
+                                                    </div>
+                                                </div></div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="mb-1 row">
+                                                        <div class="col-sm-4">
+                                                            <label class="col-form-label"> 10 - UPDATE EXCHANGE RATE </label>
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" id="update_exchange" name="update_exchange" class="form-control" required></div>
+                                                        </div></div></div>
+
+                                    
+                                    
+
+                                     <div class="form-group row">
+                                        <div class="col-sm-12 text-right">
+                                            <br><input type="submit" value="Submit" class="btn-submit">
+                                        </div>
+                                    </div>
+                                </form>
+                                <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    // Get the current date in the format "YYYY-MM-DD"
+   document.addEventListener('DOMContentLoaded', () => {
+            const dateField = document.getElementById('date');
+            const today = new Date();
+            // Format the date as YYYY-MM-DD in the local timezone
+            const formattedDate = today.getFullYear() +
+                '-' + String(today.getMonth() + 1).padStart(2, '0') +
+                '-' + String(today.getDate()).padStart(2, '0');
+            
+            // Set the initial value for the date input
+            dateField.value = formattedDate;
+
+            // Initialize Flatpickr
+            flatpickr("#date", {
+                dateFormat: "Y-m-d",
+                defaultDate: formattedDate, // Set the default date to today
+                onChange: function(selectedDates, dateStr, instance) {
+                    console.log("Selected date:", dateStr); // Optional: Log the selected date
+                }
+            });
+        });
+</script>
+                            </div>
+                        </div> <!-- End of card-body -->
+                    </div> <!-- End of card -->
+                </div> <!-- End of column -->
+            </div> <!-- End of row -->
+        </section>
+    </div>
+</body>
+</html>

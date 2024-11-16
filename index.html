@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keretapi Tanah Melayu Berhad</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .content-body {
+            padding: 40px;
+        }
+
+        .card-body {
+            height: 685px;
+            display: flex; /* Use Flexbox for side-by-side layout */
+            gap: 20px; /* Add space between navigation and form */
+        }
+
+        .card-navi {
+            width: 200px;
+            background-color: #f8f9fa; /* Light grey */
+            padding: 10px;
+            border: 1px solid #ddd; /* Border for separation */
+            border-radius: 5px;
+        }
+
+        .card-navi a {
+            display: block;
+            color: #000;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card-navi a:hover {
+            background-color: #495057; /* Slightly darker background */
+            color: #fff; /* White text */
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow cards to wrap to the next row */
+            gap: 20px; /* Space between cards */
+        }
+
+        .card-item {
+                    flex: 1 1 calc(50% - 20px); /* Take up 50% width with gap */
+        width: 300px; /* Ensure cards don't shrink too much */
+         height: 200px;
+        background-color: #ffffff; /* White background */
+        border: 1px solid #ddd; /* Light border */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-decoration: none; /* Remove underline */
+        color: inherit; /* Inherit text color */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-item:hover {
+        transform: translateY(-5px); /* Lift card slightly */
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        text-decoration: none; /* No underline on hover */
+    }
+
+    .card-item h1,
+    .card-item h2 {
+        margin: 0;
+        font-size: 18px;
+        color: #333; /* Set custom text color */
+    }
+
+    .card-item h1 {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .card-item h2 {
+        font-weight: normal;
+    }
+    </style>
+</head>
+<body>
+    <div class="content-body">
+        <section id="basic-horizontal-layouts">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <img src="https://www.ktmb.com.my/assets/img/logo_miniktm.png" alt="KTM Logo">
+                                </div>
+                                <div class="col-7">
+                                    <h4>Keretapi Tanah Melayu Berhad</h4>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <!-- Navigation Section -->
+                            <div class="card-navi">
+                                <a href="index.html">Home</a>
+                                <a href="#form">Form</a>
+                                <a href="log_data.html">Log Data</a>
+                            </div>
+                            
+                            <!-- Card Container Section -->
+                            <div class="card-container">
+                                <a href="form_shiftpagi.html" class="card-item">
+                                    <h1>FORM</h1>
+                                    <h2>SPOT Interface Batch</h2>
+                                </a>
+                                <a href="form_shiftmalam.html" class="card-item">
+                                    <h1>FORM</h1>
+                                    <h2>FINANCE Interface Batch</h2>
+                                </a>
+                            </div>
+                        </div> <!-- End of card-body -->
+                    </div> <!-- End of card -->
+                </div> <!-- End of column -->
+            </div> <!-- End of row -->
+        </section>
+    </div>
+</body>
+</html>

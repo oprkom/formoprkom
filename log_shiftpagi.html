@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keretapi Tanah Melayu Berhad</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .content-body {
+            padding: 40px;
+        }
+
+        .card-body {
+            height: 685px;
+            display: flex; /* Use Flexbox for side-by-side layout */
+            gap: 20px; /* Add space between navigation and form */
+        }
+
+        .card-navi {
+            width: 200px;
+            background-color: #f8f9fa; /* Light grey */
+            padding: 10px;
+            border: 1px solid #ddd; /* Border for separation */
+            border-radius: 5px;
+        }
+
+        .card-navi a {
+            display: block;
+            color: #000;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card-navi a:hover {
+            background-color: #495057; /* Slightly darker background */
+            color: #fff; /* White text */
+        }
+
+        .card-container {
+            height: 600px;
+            width: 400px;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="content-body">
+        <section id="basic-horizontal-layouts">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <img src="https://www.ktmb.com.my/assets/img/logo_miniktm.png" alt="KTM Logo">
+                                </div>
+                                <div class="col-7">
+                                    <h4>Keretapi Tanah Melayu Berhad</h4>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <!-- Navigation Section -->
+                            <div class="card-navi">
+                                <a href="index.html">Home</a>
+                                <a href="#form">Form</a>
+                                <a href="log_data.html">Log Data</a>
+                            </div>
+                            
+                            <!-- Card Container Section -->
+                            <div class="card-container">
+                                <div class="card-container" id="data-container"></div>
+
+   <script>
+
+
+    async function fetchData() {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbw7I1cdPiUuTeTt6i4pRJXNyTu67bWxJMbbL2D0ZHZWQhAoIztT_tbx1IxKG4DC88MV9A/exec');
+        const data = await response.json();
+
+        // Sort data by date (assuming row[0] is the date in YYYY-MM-DD format)
+        const sortedData = data.sort((a, b) => new Date(b[0]) - new Date(a[0]));
+
+        // Get the latest entry (first after sorting)
+        const latestRow = sortedData[0];
+
+        // Display the latest data
+        const container = document.getElementById('data-container');
+        const card = document.createElement('div');
+        card.className = 'card';
+        const date = document.createElement('h5');
+        const formattedDate = new Date(latestRow[0]).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        date.textContent = `Date: ${formattedDate}`;
+        card.appendChild(date);
+
+        const label = document.createElement('label');
+        label.textContent = 'SPOT Interface Batch';
+        card.appendChild(label);
+
+        const sublabel1 = document.createElement('B');
+        sublabel1.textContent = '01 - SPOT Interface Batch Programs ';
+        card.appendChild(sublabel1);
+
+         const sublabel2 = document.createElement('label');
+        sublabel2.textContent = `01 -  ${latestRow[1]}`;
+        card.appendChild(sublabel2);
+
+         const sublabel3 = document.createElement('label');
+        sublabel3.textContent = `02 -  ${latestRow[2]}`;
+        card.appendChild(sublabel3);
+
+         const sublabel4 = document.createElement('label');
+        sublabel4.textContent = `03 -  ${latestRow[3]}`;
+        card.appendChild(sublabel4);
+
+         const sublabel6 = document.createElement('B');
+        sublabel6.textContent = '02 - SPOT General Batch Programs';
+        card.appendChild(sublabel6);
+
+         const sublabel7 = document.createElement('label');
+        sublabel7.textContent = `03 -  ${latestRow[4]}`;
+        card.appendChild(sublabel7);
+
+         const sublabel8 = document.createElement('label');
+        sublabel8.textContent = `06 -  ${latestRow[5]}`;
+        card.appendChild(sublabel8);
+
+         const sublabel9 = document.createElement('label');
+        sublabel9.textContent = `07 -  ${latestRow[6]}`;
+        card.appendChild(sublabel9);
+
+         const sublabel10 = document.createElement('B');
+        sublabel10.textContent = '03 - SPOT REPORT BATCH PROGRAMS';
+        card.appendChild(sublabel10);
+
+         const sublabel11 = document.createElement('label');
+        sublabel11.textContent = `03 -  ${latestRow[7]}`;
+        card.appendChild(sublabel11);
+
+         const sublabel12 = document.createElement('label');
+        sublabel12.textContent = `04 -  ${latestRow[8]}`;
+        card.appendChild(sublabel12);
+
+         const sublabel13 = document.createElement('label');
+        sublabel13.textContent = `06 -  ${latestRow[9]}`;
+        card.appendChild(sublabel13);
+
+         const sublabel14 = document.createElement('label');
+        sublabel14.textContent = `07 -  ${latestRow[10]}`;
+        card.appendChild(sublabel14);
+
+         const sublabel15 = document.createElement('label');
+        sublabel15.textContent = `08 -  ${latestRow[11]}`;
+        card.appendChild(sublabel15);
+
+         const sublabel16 = document.createElement('label');
+        sublabel16.textContent = `09 -  ${latestRow[12]}`;
+        card.appendChild(sublabel16);
+
+         const sublabel17 = document.createElement('label');
+        sublabel17.textContent = `11 -  ${latestRow[13]}`;
+        card.appendChild(sublabel17);
+
+         const sublabel18 = document.createElement('label');
+        sublabel18.textContent = `13 -  ${latestRow[14]}`;
+        card.appendChild(sublabel18);
+
+
+        container.appendChild(card);
+    }
+
+    fetchData();
+</script>
+
+                            </div>
+                        </div> <!-- End of card-body -->
+                    </div> <!-- End of card -->
+                </div> <!-- End of column -->
+            </div> <!-- End of row -->
+        </section>
+    </div>
+</body>
+</html>

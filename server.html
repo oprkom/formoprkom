@@ -89,21 +89,21 @@ table { width: 100%; border-collapse: collapse; }
         </tbody>
     </table>
     <script>
-        async function fetchData() {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbx0pS7WKEU6PO0gWQmS84okqIiVsdpycdWbhW3854WtMRba6HcUJWFVbLYIgxtdiN4K/exec');
-        const data = await response.json();
-
-        const container = document.getElementById('data-container');
-        const card = document.createElement('div');
-        card.className = 'card';
-        });
-
-        const servers = [
-            { name: "${latestRow[1]}", url: "${latestRow[1]}" },
-        ];
+       
+        const scriptURL ='https://script.google.com/macros/s/AKfycbx0pS7WKEU6PO0gWQmS84okqIiVsdpycdWbhW3854WtMRba6HcUJWFVbLYIgxtdiN4K/exec';
+         async function fetchData() {
+            try {
+                const response = await fetch(scriptURL);
+                const data = await response.json();
+                populateServerList(data);
+                startRealTimeMonitoring(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
 
         // Function to populate the table with servers
-        function populateServerList() {
+        function populateServerList(servers) {
             const tbody = document.getElementById("server-list");
             tbody.innerHTML = ''; // Clear existing rows
             servers.forEach((server, index) => {
@@ -111,8 +111,8 @@ table { width: 100%; border-collapse: collapse; }
                 row.innerHTML = `
                     <td>${server.name}</td>
                     <td>${server.url}</td>
-                    <td id="status-${index}">Checking...</td>
-                    <td id="time-${index}">-</td>
+                    <td id="status-${index}" class="status-checking">Checking...</td>
+                    <td><button onclick="checkServer('${server.url}', ${index})">Ping</button></td>
                 `;
                 tbody.appendChild(row);
             });
@@ -121,9 +121,8 @@ table { width: 100%; border-collapse: collapse; }
         // Function to check server status
         async function checkServer(url, index) {
             const statusCell = document.getElementById(`status-${index}`);
-            const timeCell = document.getElementById(`time-${index}`);
-            statusCell.textContent = "Pinging...";
-            statusCell.className = ""; // Clear previous status class
+            statusCell.textContent = "Checking...";
+            statusCell.className = "status-checking";
             try {
                 const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
                 if (response.ok || response.type === 'opaque') {
@@ -137,27 +136,19 @@ table { width: 100%; border-collapse: collapse; }
                 statusCell.textContent = "DOWN";
                 statusCell.className = "status-down";
             }
-            // Update last checked time
-            const now = new Date().toLocaleTimeString();
-            timeCell.textContent = now;
         }
 
-        // Function to check all servers periodically
-        function startRealTimeMonitoring() {
+        // Function to monitor all servers periodically
+        function startRealTimeMonitoring(servers) {
             servers.forEach((server, index) => {
-                // Check server immediately on load
-                checkServer(server.url, index);
-
-                // Schedule periodic checks
                 setInterval(() => {
                     checkServer(server.url, index);
                 }, 5000); // Check every 5 seconds
             });
         }
 
-        // Initialize the dashboard
-        populateServerList();
-        startRealTimeMonitoring();
+        // Fetch and display data on page load
+        fetchData();
     </script>
                                 </div>
                               

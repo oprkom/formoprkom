@@ -91,32 +91,23 @@ table { width: 100%; border-collapse: collapse; }
     <script>
        
         const scriptURL ='https://script.google.com/macros/s/AKfycbx0pS7WKEU6PO0gWQmS84okqIiVsdpycdWbhW3854WtMRba6HcUJWFVbLYIgxtdiN4K/exec';
-         async function fetchData() {
-            try {
-                const response = await fetch(scriptURL);
-                const data = await response.json();
-                populateServerList(data);
-                startRealTimeMonitoring(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
+        async function fetchData() {
+    try {
+        const response = await fetch(scriptURL);
+        const data = await response.json();
 
-        // Function to populate the table with servers
-        function populateServerList(servers) {
-            const tbody = document.getElementById("server-list");
-            tbody.innerHTML = ''; // Clear existing rows
-            servers.forEach((server, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${server.name}</td>
-                    <td>${server.url}</td>
-                    <td id="status-${index}" class="status-checking">Checking...</td>
-                    <td><button onclick="checkServer('${server.url}', ${index})">Ping</button></td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
+        // Transform the 2D array into an array of objects
+        const servers = data.slice(1).map(row => ({
+            name: row[0],
+            url: row[1]
+        }));
+
+        populateServerList(servers);
+        startRealTimeMonitoring(servers);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
 
         // Function to check server status
         async function checkServer(url, index) {

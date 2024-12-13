@@ -102,41 +102,7 @@ table { width: 100%; border-collapse: collapse; }
             url: row[2]
         }));
 
-        populateServerList(servers);
-        startRealTimeMonitoring(servers);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-}
 
-        // Function to check server status
-        async function checkServer(url, index) {
-            const statusCell = document.getElementById(`status-${index}`);
-            statusCell.textContent = "Checking...";
-            statusCell.className = "status-checking";
-            try {
-                const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
-                if (response.ok || response.type === 'opaque') {
-                    statusCell.textContent = "UP";
-                    statusCell.className = "status-up";
-                } else {
-                    statusCell.textContent = "DOWN";
-                    statusCell.className = "status-down";
-                }
-            } catch (error) {
-                statusCell.textContent = "DOWN";
-                statusCell.className = "status-down";
-            }
-        }
-
-        // Function to monitor all servers periodically
-        function startRealTimeMonitoring(servers) {
-            servers.forEach((server, index) => {
-                setInterval(() => {
-                    checkServer(server.url, index);
-                }, 5000); // Check every 5 seconds
-            });
-        }
 
         // Fetch and display data on page load
         fetchData();

@@ -89,9 +89,29 @@ table { width: 100%; border-collapse: collapse; }
         </tbody>
     </table>
     <script>
-        // Example server list
+        async function fetchData() {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbx0pS7WKEU6PO0gWQmS84okqIiVsdpycdWbhW3854WtMRba6HcUJWFVbLYIgxtdiN4K/exec');
+        const data = await response.json();
+
+        // Sort data by date (assuming row[0] is the date in YYYY-MM-DD format)
+        const sortedData = data.sort((a, b) => new Date(b[0]) - new Date(a[0]));
+
+        // Get the latest entry (first after sorting)
+        const latestRow = sortedData[0];
+
+        // Display the latest data
+        const container = document.getElementById('data-container');
+        const card = document.createElement('div');
+        card.className = 'card';
+        const date = document.createElement('h5');
+        const formattedDate = new Date(latestRow[0]).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
         const servers = [
-            { name: "Google", url: "https://www.google.com" },
+            { name: "Google", url: "${latestRow[1]}" },
             { name: "KTMB", url: "https://www.ktmb.com.my/" },
             { name: "KITS", url: "https://kitsadmin.ktmb.com.my/Account/Login?ReturnUrl=%2F" }
         ];

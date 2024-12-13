@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keretapi Tanah Melayu Berhad</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+    <style>
+        .content-body {
+            padding: 40px;
+        }
+
+        .card-body {
+            display: flex; /* Use Flexbox for side-by-side layout */
+            gap: 20px; /* Add space between navigation and form */
+             height: 685px;
+        }
+
+        .card-navi {
+            width: 200px;
+            background-color: #f8f9fa; /* Light grey */
+            padding: 10px;
+            border: 1px solid #ddd; /* Border for separation */
+            border-radius: 5px;
+        }
+
+        .card-navi a {
+            display: block;
+            color: #000;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card-navi a:hover {
+            background-color: #495057; /* Slightly darker background */
+            color: #fff; /* White text */
+        }
+table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .status-up { color: green; }
+        .status-down { color: red; }
+       
+    </style>
+</head>
+<body>
+    <div class="content-body">
+        <section id="basic-horizontal-layouts">
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <img src="https://www.ktmb.com.my/assets/img/logo_miniktm.png" alt="KTM Logo">
+                                </div>
+                                <div class="col-7">
+                                    <h4>Keretapi Tanah Melayu Berhad</h4>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <!-- Navigation Section -->
+                            <div class="card-navi">
+                               <a href="index.html">Home</a>
+                                <a href="server.html">Server</a>
+                                <a href="log_data.html">Log Data</a>
+                            </div>
+
+                            <!-- Form Section -->
+                            <div class="card-form">
+                               <h1>Server Monitor</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Server Name</th>
+                <th>URL</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="server-list">
+            <!-- Rows will be dynamically populated -->
+        </tbody>
+    </table>
+    <script>
+        // Example server list
+        const servers = [
+            { name: "Google", url: "https://www.google.com" },
+            { name: "KTMB", url: "https://www.ktmb.com.my/" },
+            { name: "Invalid URL", url: "https://invalid-url.xyz" }
+        ];
+
+        // Function to populate the table with servers
+        function populateServerList() {
+            const tbody = document.getElementById("server-list");
+            tbody.innerHTML = ''; // Clear existing rows
+            servers.forEach((server, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${server.name}</td>
+                    <td>${server.url}</td>
+                    <td id="status-${index}">Checking...</td>
+                    <td id="time-${index}">-</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Function to check server status
+        async function checkServer(url, index) {
+            const statusCell = document.getElementById(`status-${index}`);
+            const timeCell = document.getElementById(`time-${index}`);
+            statusCell.textContent = "Pinging...";
+            statusCell.className = ""; // Clear previous status class
+            try {
+                const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+                if (response.ok || response.type === 'opaque') {
+                    statusCell.textContent = "UP";
+                    statusCell.className = "status-up";
+                } else {
+                    statusCell.textContent = "DOWN";
+                    statusCell.className = "status-down";
+                }
+            } catch (error) {
+                statusCell.textContent = "DOWN";
+                statusCell.className = "status-down";
+            }
+            // Update last checked time
+            const now = new Date().toLocaleTimeString();
+            timeCell.textContent = now;
+        }
+
+        // Function to check all servers periodically
+        function startRealTimeMonitoring() {
+            servers.forEach((server, index) => {
+                // Check server immediately on load
+                checkServer(server.url, index);
+
+                // Schedule periodic checks
+                setInterval(() => {
+                    checkServer(server.url, index);
+                }, 5000); // Check every 5 seconds
+            });
+        }
+
+        // Initialize the dashboard
+        populateServerList();
+        startRealTimeMonitoring();
+    </script>
+                                </div>
+                              
+                            </div>
+                        </div> <!-- End of card-body -->
+                    </div> <!-- End of card -->
+                </div> <!-- End of column -->
+            </div> <!-- End of row -->
+        </section>
+    </div>
+</body>
+</html>

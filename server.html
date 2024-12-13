@@ -90,7 +90,7 @@ table { width: 100%; border-collapse: collapse; }
     </table>
     <script>
        
-        const scriptURL ='https://script.google.com/macros/s/AKfycbx0pS7WKEU6PO0gWQmS84okqIiVsdpycdWbhW3854WtMRba6HcUJWFVbLYIgxtdiN4K/exec';
+        const scriptURL ='https://script.google.com/macros/s/AKfycbwiiqeso0brzAnG82vSxv7rrCjKGtVUoxg7ZhHqX1Gz51dFMy0sASymwyLtRQxuSFhzjw/exec';
         async function fetchData() {
     try {
         const response = await fetch(scriptURL);
@@ -98,8 +98,8 @@ table { width: 100%; border-collapse: collapse; }
 
         // Transform the 2D array into an array of objects
         const servers = data.slice(1).map(row => ({
-            name: row[0],
-            url: row[1]
+            name: row[1],
+            url: row[2]
         }));
 
         populateServerList(servers);

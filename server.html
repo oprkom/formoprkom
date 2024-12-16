@@ -101,13 +101,15 @@ table { width: 100%; border-collapse: collapse; }
         data.forEach(row => {
             const tableRow = document.createElement('tr');
 
-            const data1Cell = document.createElement('td');
-            data1Cell.textContent = `${row[0]}`;
-            tableRow.appendChild(data1Cell);
+             const serverNameCell = document.createElement('td');
+                serverNameCell.textContent = `${row[0]}`;
+                tableRow.appendChild(serverNameCell);
 
-            const data2Cell = document.createElement('td');
-            data2Cell.textContent = `${row[1]}`;
-            tableRow.appendChild(data2Cell);
+                // URL Cell
+                const urlCell = document.createElement('td');
+                urlCell.textContent = `${row[1]}`;
+                tableRow.appendChild(urlCell);
+
              const statusCell = document.createElement('td');
                 statusCell.textContent = 'Checking...'; // Initial status
                 tableRow.appendChild(statusCell);

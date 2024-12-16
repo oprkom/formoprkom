@@ -95,11 +95,23 @@ table { width: 100%; border-collapse: collapse; }
         const data = await response.json();
 
         // Populate the table
-        const tableBody = document.getElementById('server-list');
+       const tableBody = document.getElementById('server-list');
         tableBody.innerHTML = ''; // Clear any existing rows
 
-        sortedData.forEach(row => {
+        data.forEach(row => {
             const tableRow = document.createElement('tr');
+
+            // Format the date
+            const formattedDate = new Date(row[0]).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Create table cells for each column
+            const dateCell = document.createElement('td');
+            dateCell.textContent = formattedDate;
+            tableRow.appendChild(dateCell);
 
             const data1Cell = document.createElement('td');
             data1Cell.textContent = `07 - ${row[1]}`;
@@ -119,7 +131,6 @@ table { width: 100%; border-collapse: collapse; }
         console.error('Error fetching or processing data:', error);
     }
 }
-
 
 
         // Fetch and display data on page load

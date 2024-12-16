@@ -110,7 +110,8 @@ table { width: 100%; border-collapse: collapse; }
                 urlCell.textContent = `${row[1]}`;
                 tableRow.appendChild(urlCell);
 
-             const statusCell = document.createElement('td');
+              // Status Cell
+                const statusCell = document.createElement('td');
                 statusCell.textContent = 'Checking...'; // Initial status
                 tableRow.appendChild(statusCell);
 
@@ -118,7 +119,14 @@ table { width: 100%; border-collapse: collapse; }
                 const actionCell = document.createElement('td');
                 const refreshButton = document.createElement('button');
                 refreshButton.textContent = 'Refresh';
-                refreshButton.onclick = () => checkServerStatus(row[1], statusCell); // Refresh button to check status
+
+                // Add a click event listener to the button
+                refreshButton.onclick = () => {
+                    console.log(`Refresh button clicked for URL: ${row[1]}`);
+                    statusCell.textContent = 'Refreshing...'; // Temporary status while refreshing
+                    checkServerStatus(row[1], statusCell);
+                };
+
                 actionCell.appendChild(refreshButton);
                 tableRow.appendChild(actionCell);
 
@@ -134,22 +142,25 @@ table { width: 100%; border-collapse: collapse; }
     }
 
     // Function to ping server and update status
-   async function checkServerStatus(serverURL, statusCell) {
+    async function checkServerStatus(serverURL, statusCell) {
         try {
+            console.log(`Pinging server: ${serverURL}`);
             const response = await fetch(serverURL, { method: 'HEAD', mode: 'no-cors' });
             if (response.ok || response.status === 0) {
                 statusCell.textContent = 'Up'; // Server is reachable
                 statusCell.style.color = 'green';
+                console.log(`Server is up: ${serverURL}`);
             } else {
                 statusCell.textContent = 'Down'; // Server is unreachable
                 statusCell.style.color = 'red';
+                console.log(`Server is down: ${serverURL}`);
             }
         } catch (error) {
             statusCell.textContent = 'Down'; // Treat as down on fetch error
             statusCell.style.color = 'red';
+            console.error(`Error pinging server: ${serverURL}`, error);
         }
     }
-
 
 
         // Fetch and display data on page load

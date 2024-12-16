@@ -101,21 +101,14 @@ table { width: 100%; border-collapse: collapse; }
         data.forEach(row => {
             const tableRow = document.createElement('tr');
 
-            // Format the date
-            
-
             const data1Cell = document.createElement('td');
-            data1Cell.textContent = `07 - ${row[1]}`;
+            data1Cell.textContent = `07 - ${row[0]}`;
             tableRow.appendChild(data1Cell);
 
             const data2Cell = document.createElement('td');
-            data2Cell.textContent = `08 - ${row[2]}`;
+            data2Cell.textContent = `08 - ${row[1]}`;
             tableRow.appendChild(data2Cell);
-
-            const data3Cell = document.createElement('td');
-            data3Cell.textContent = row[5] || ''; // Handle undefined or missing data
-            tableRow.appendChild(data3Cell);
-
+            
             tableBody.appendChild(tableRow);
         });
     } catch (error) {

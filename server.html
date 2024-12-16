@@ -89,18 +89,51 @@ table { width: 100%; border-collapse: collapse; }
         </tbody>
     </table>
     <script>
-       
-        const scriptURL ='https://script.google.com/macros/s/AKfycbwiiqeso0brzAnG82vSxv7rrCjKGtVUoxg7ZhHqX1Gz51dFMy0sASymwyLtRQxuSFhzjw/exec';
-        async function fetchData() {
+       async function fetchData() {
     try {
-        const response = await fetch(scriptURL);
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwiiqeso0brzAnG82vSxv7rrCjKGtVUoxg7ZhHqX1Gz51dFMy0sASymwyLtRQxuSFhzjw/exec');
         const data = await response.json();
 
-        // Transform the 2D array into an array of objects
-        const servers = data.slice(1).map(row => ({
-            name: row[1],
-            url: row[2]
-        }));
+       // Sort data by date (assuming row[0] is the date in YYYY-MM-DD format)
+        const sortedData = data.sort((a, b) => new Date(b[0]) - new Date(a[0]));
+
+        // Populate the table
+        const tableBody = document.getElementById('server-list');
+        tableBody.innerHTML = ''; // Clear any existing rows
+
+        sortedData.forEach(row => {
+            const tableRow = document.createElement('tr');
+
+            // Format the date
+            const formattedDate = new Date(row[0]).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Create table cells for each column
+            const dateCell = document.createElement('td');
+            dateCell.textContent = formattedDate;
+            tableRow.appendChild(dateCell);
+
+            const data1Cell = document.createElement('td');
+            data1Cell.textContent = `07 - ${row[1]}`;
+            tableRow.appendChild(data1Cell);
+
+            const data2Cell = document.createElement('td');
+            data2Cell.textContent = `08 - ${row[2]}`;
+            tableRow.appendChild(data2Cell);
+
+            const data3Cell = document.createElement('td');
+            data3Cell.textContent = row[3] || ''; // Handle undefined or missing data
+            tableRow.appendChild(data3Cell);
+
+            tableBody.appendChild(tableRow);
+        });
+    } catch (error) {
+        console.error('Error fetching or processing data:', error);
+    }
+}
 
 
 

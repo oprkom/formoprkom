@@ -101,11 +101,6 @@ table { width: 100%; border-collapse: collapse; }
         sortedData.forEach(row => {
             const tableRow = document.createElement('tr');
 
-            // Create table cells for each column
-            const dateCell = document.createElement('td');
-            dateCell.textContent = formattedDate;
-            tableRow.appendChild(dateCell);
-
             const data1Cell = document.createElement('td');
             data1Cell.textContent = `07 - ${row[1]}`;
             tableRow.appendChild(data1Cell);

@@ -102,16 +102,7 @@ table { width: 100%; border-collapse: collapse; }
             const tableRow = document.createElement('tr');
 
             // Format the date
-            const formattedDate = new Date(row[0]).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            // Create table cells for each column
-            const dateCell = document.createElement('td');
-            dateCell.textContent = formattedDate;
-            tableRow.appendChild(dateCell);
+            
 
             const data1Cell = document.createElement('td');
             data1Cell.textContent = `07 - ${row[1]}`;

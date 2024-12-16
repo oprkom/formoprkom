@@ -94,22 +94,12 @@ table { width: 100%; border-collapse: collapse; }
         const response = await fetch('https://script.google.com/macros/s/AKfycbwiiqeso0brzAnG82vSxv7rrCjKGtVUoxg7ZhHqX1Gz51dFMy0sASymwyLtRQxuSFhzjw/exec');
         const data = await response.json();
 
-       // Sort data by date (assuming row[0] is the date in YYYY-MM-DD format)
-        const sortedData = data.sort((a, b) => new Date(b[0]) - new Date(a[0]));
-
         // Populate the table
         const tableBody = document.getElementById('server-list');
         tableBody.innerHTML = ''; // Clear any existing rows
 
         sortedData.forEach(row => {
             const tableRow = document.createElement('tr');
-
-            // Format the date
-            const formattedDate = new Date(row[0]).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
 
             // Create table cells for each column
             const dateCell = document.createElement('td');

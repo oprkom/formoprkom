@@ -102,19 +102,52 @@ table { width: 100%; border-collapse: collapse; }
             const tableRow = document.createElement('tr');
 
             const data1Cell = document.createElement('td');
-            data1Cell.textContent = `07 - ${row[0]}`;
+            data1Cell.textContent = `${row[0]}`;
             tableRow.appendChild(data1Cell);
 
             const data2Cell = document.createElement('td');
-            data2Cell.textContent = `08 - ${row[1]}`;
+            data2Cell.textContent = `${row[1]}`;
             tableRow.appendChild(data2Cell);
-            
-            tableBody.appendChild(tableRow);
-        });
-    } catch (error) {
-        console.error('Error fetching or processing data:', error);
+             const statusCell = document.createElement('td');
+                statusCell.textContent = 'Checking...'; // Initial status
+                tableRow.appendChild(statusCell);
+
+                // Action Cell
+                const actionCell = document.createElement('td');
+                const refreshButton = document.createElement('button');
+                refreshButton.textContent = 'Refresh';
+                refreshButton.onclick = () => checkServerStatus(row[1], statusCell); // Refresh button to check status
+                actionCell.appendChild(refreshButton);
+                tableRow.appendChild(actionCell);
+
+                // Append the row to the table body
+                tableBody.appendChild(tableRow);
+
+                // Check initial status
+                checkServerStatus(row[1], statusCell);
+            });
+        } catch (error) {
+            console.error('Error fetching or processing data:', error);
+        }
     }
-}
+
+    // Function to ping server and update status
+    async function checkServerStatus(serverIP, statusCell) {
+        try {
+            const response = await fetch(`https://${serverIP}`, { method: 'HEAD', mode: 'no-cors' });
+            if (response.ok || response.status === 0) {
+                statusCell.textContent = 'Up'; // Server is reachable
+                statusCell.style.color = 'green';
+            } else {
+                statusCell.textContent = 'Down'; // Server is unreachable
+                statusCell.style.color = 'red';
+            }
+        } catch (error) {
+            statusCell.textContent = 'Down'; // Treat as down on fetch error
+            statusCell.style.color = 'red';
+        }
+    }
+
 
 
         // Fetch and display data on page load

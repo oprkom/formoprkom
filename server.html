@@ -134,9 +134,9 @@ table { width: 100%; border-collapse: collapse; }
     }
 
     // Function to ping server and update status
-    async function checkServerStatus(serverIP, statusCell) {
+   async function checkServerStatus(serverURL, statusCell) {
         try {
-            const response = await fetch(`https://${serverIP}`, { method: 'HEAD', mode: 'no-cors' });
+            const response = await fetch(serverURL, { method: 'HEAD', mode: 'no-cors' });
             if (response.ok || response.status === 0) {
                 statusCell.textContent = 'Up'; // Server is reachable
                 statusCell.style.color = 'green';

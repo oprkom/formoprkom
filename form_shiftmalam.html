@@ -16,9 +16,10 @@
                     update_customer: document.getElementById('update_customer').value,
                      update_natural: document.getElementById('update_natural').value,
                       update_cost: document.getElementById('update_cost').value,
-                      update_exchange: document.getElementById('update_exchange').value
+                      update_exchange: document.getElementById('update_exchange').value,
+                     customer_data: document.getElementById('customer_data').value
                 };
-                fetch('https://script.google.com/macros/s/AKfycbwoM73yE1FtY3nERNE74KjdCkxdCCgLMEy2JfrfT38t8-52b4ugKDHU0zLNvs0IVkTRRA/exec', {
+                fetch('https://script.google.com/macros/s/AKfycbx8G9liID4tXDydos1aqH3fe-2nE2rrkFPwjfePsXRW8n_-icDSDdTPYn1SL1FOyvcH1A/exec', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -242,7 +243,7 @@
                                                 <label class="col-form-label"> 03 - Customer Interface </label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input type="text" id="customer" name="customer" class="form-control" required>
+                                                <input type="text" id="customer_data" name="customer_data" class="form-control" required>
                                             </div>
                                         </div></div>
 

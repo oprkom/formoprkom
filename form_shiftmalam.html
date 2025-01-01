@@ -13,11 +13,12 @@
                  var formData = {
                     date: document.getElementById('date').value,
                      no_staff: document.getElementById('no_staff').value,
+                     customer_data: document.getElementById('customer_data').value,
                     update_customer: document.getElementById('update_customer').value,
                      update_natural: document.getElementById('update_natural').value,
                       update_cost: document.getElementById('update_cost').value,
-                      update_exchange: document.getElementById('update_exchange').value,
-                     customer_data: document.getElementById('customer_data').value
+                      update_exchange: document.getElementById('update_exchange').value
+                     
                 };
                 fetch('https://script.google.com/macros/s/AKfycbxcJPohnW1Q-X8TyeOXtKRSzcqh5P45hhnoogYqCMnPySBkkISnX8bGj2_U5AcxhPRTug/exec', {
                     method: 'POST',

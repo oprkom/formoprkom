@@ -139,12 +139,13 @@
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwiiqeso0brzAnG82vSxv7rrCjKGtVUoxg7ZhHqX1Gz51dFMy0sASymwyLtRQxuSFhzjw/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7UloeZb2pIGS6TvyC1mlvgHk3m7BnrOCrvkS6c8RWj8lIR4R9CyboAKV4ruVvD-NsGg/exec?sheet=finance';
     const FIELD_LABELS = [
       '07 – Update Customer Contact Details',
       '08 – Update Natural Account Code',
       '09 – Update Cost Center Code',
-      '10 – Update Exchange Rate'
+      '10 – Update Exchange Rate',
+      '03 – Customer Interface (Spot Interface)'
     ];
 
     const contentEl = document.getElementById('content');
@@ -189,6 +190,7 @@
 
     function renderLatest(row) {
       const formattedDate = formatDate(row[0]);
+      const staff = row[6] ? `Created by ${row[6]}` : '';
 
       const fieldsHtml = FIELD_LABELS.map((label, i) => {
         const value = row[i + 1];
@@ -211,7 +213,7 @@
           </div>
         </div>`;
 
-      statusEl.textContent = 'Showing the most recent submission';
+      statusEl.textContent = staff ? `Showing the most recent submission · ${staff}` : 'Showing the most recent submission';
     }
 
     async function fetchData() {

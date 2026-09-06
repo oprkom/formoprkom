@@ -330,6 +330,19 @@
       }
     };
 
+    const STAFF_OPTIONS = [
+      { value: '', label: '--' },
+      { value: '002299', label: 'AZIZAN ABAS' },
+      { value: '002244', label: 'SHAHARUDDIN SHAID' },
+      { value: '301009', label: 'MUHAMMAD HAFIZUL HAKIM' },
+      { value: '301026', label: 'AHMAD FADZELII' },
+      { value: '303547', label: 'HAZWAN' },
+      { value: '302289', label: 'AMIRUL SHAFIQ' },
+      { value: '304504', label: 'MUHAMMAD AZHAR' },
+      { value: '303230', label: 'AMIRUL AZRI' },
+      { value: '303229', label: 'MOHAMAD FADZLI' }
+    ];
+
     let currentSheet = 'spot';
     let currentPage = 1;
     let isSaving = false;
@@ -367,6 +380,11 @@
       if (isNaN(d.getTime())) return '';
       // en-CA locale gives YYYY-MM-DD directly, computed in KL time.
       return d.toLocaleDateString('en-CA', { timeZone: SHEET_TIMEZONE });
+    }
+
+    function staffLabel(code) {
+      const match = STAFF_OPTIONS.find(opt => opt.value === String(code));
+      return match ? match.label : code;
     }
 
     function renderLoading() {
@@ -462,7 +480,8 @@
         const cells = config.summaryCols.map(c => {
           const val = row[c.idx];
           const hasValue = val !== undefined && val !== null && String(val).trim() !== '';
-          return `<td class="${hasValue ? '' : 'cell-muted'}">${hasValue ? val : '—'}</td>`;
+          const displayVal = (config.fieldKeys[c.idx] === 'no_staff' && hasValue) ? staffLabel(val) : val;
+          return `<td class="${hasValue ? '' : 'cell-muted'}">${hasValue ? displayVal : '—'}</td>`;
         }).join('');
 
         return `
@@ -549,12 +568,14 @@
         const rowsHtml = group.fields.map(([idx, label]) => {
           const value = row[idx];
           const hasValue = value !== undefined && value !== null && String(value).trim() !== '';
+          const isStaffField = config.fieldKeys[idx] === 'no_staff';
 
           if (!isEdit) {
+            const displayValue = isStaffField && hasValue ? staffLabel(value) : value;
             return `
               <div class="field-row">
                 <div class="field-label">${label}</div>
-                <div class="field-value ${hasValue ? '' : 'empty'}">${hasValue ? value : '—'}</div>
+                <div class="field-value ${hasValue ? '' : 'empty'}">${hasValue ? displayValue : '—'}</div>
               </div>`;
           }
 
@@ -563,6 +584,19 @@
               <div class="field-row">
                 <div class="field-label">${label}</div>
                 <input type="date" data-field-idx="${idx}" value="${toInputDate(value)}">
+              </div>`;
+          }
+
+          if (isStaffField) {
+            const optionsHtml = STAFF_OPTIONS.map(opt =>
+              `<option value="${opt.value}" ${String(value) === opt.value ? 'selected' : ''}>${opt.label}</option>`
+            ).join('');
+            return `
+              <div class="field-row">
+                <div class="field-label">${label}</div>
+                <select data-field-idx="${idx}" class="form-control" style="max-width:60%;padding:7px 10px;border:1px solid #d7dce2;border-radius:7px;font-size:13.5px;">
+                  ${optionsHtml}
+                </select>
               </div>`;
           }
 

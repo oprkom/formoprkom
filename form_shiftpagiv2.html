@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keretapi Tanah Melayu Berhad</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+  :root{
+    --ktm-blue:#0b4f8a;
+    --ktm-blue-dark:#083b68;
+    --ktm-red:#c0392b;
+    --ktm-green:#1e8e3e;
+    --bg:#f2f4f7;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg);font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+  .content-body{padding:24px;max-width:1200px;margin:0 auto;}
+
+  .card{border:none;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.08);overflow:hidden;}
+  .card-header{background:var(--ktm-blue);color:#fff;padding:20px 24px;}
+  .card-header img{max-height:44px;background:#fff;border-radius:6px;padding:4px;}
+  .card-header h4{margin:0;font-weight:600;}
+  .card-header hr{display:none;}
+
+  .card-body{display:flex;gap:24px;padding:24px;align-items:flex-start;flex-wrap:wrap;}
+
+  .card-navi{width:200px;background:#fff;padding:12px;border:1px solid #e3e6ea;border-radius:10px;flex-shrink:0;}
+  .card-navi a{display:block;color:#243447;padding:10px 12px;text-decoration:none;font-size:15px;
+    border-radius:8px;transition:background-color .2s,color .2s;font-weight:500;margin-bottom:4px;}
+  .card-navi a:hover, .card-navi a.active{background:var(--ktm-blue);color:#fff;}
+
+  .card-form{flex:1;min-width:280px;background:#fff;border:1px solid #e3e6ea;border-radius:10px;padding:24px;}
+
+  .section-title{font-size:14px;letter-spacing:.03em;text-transform:uppercase;color:var(--ktm-blue);
+    font-weight:700;margin:28px 0 12px;padding-bottom:6px;border-bottom:2px solid #eef1f5;}
+  .section-title:first-of-type{margin-top:0;}
+  .sub-label{font-size:13px;color:#6b7785;margin:14px 0 6px;font-weight:600;}
+
+  label.col-form-label{font-size:14px;color:#354150;}
+  .form-control{border-radius:8px;border:1px solid #d7dce2;}
+  .form-control:focus{border-color:var(--ktm-blue);box-shadow:0 0 0 .15rem rgba(11,79,138,.15);}
+  .form-control[readonly]{background:#eef1f4;}
+  .form-control.is-invalid{border-color:var(--ktm-red);}
+
+  .btn-submit{
+    background:var(--ktm-blue);color:#fff;font-size:16px;font-weight:600;padding:12px 28px;
+    border:none;border-radius:8px;cursor:pointer;transition:background-color .2s,transform .05s;
+    display:inline-flex;align-items:center;gap:10px;min-width:150px;justify-content:center;
+  }
+  .btn-submit:hover:not(:disabled){background:var(--ktm-blue-dark);}
+  .btn-submit:active:not(:disabled){transform:scale(.98);}
+  .btn-submit:disabled{background:#9fb3c8;cursor:not-allowed;}
+
+  .spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.5);border-top-color:#fff;
+    border-radius:50%;animation:spin .7s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* Status modal */
+  .status-overlay{position:fixed;inset:0;background:rgba(20,26,33,.5);display:none;
+    align-items:center;justify-content:center;z-index:1000;padding:16px;}
+  .status-overlay.show{display:flex;}
+  .status-box{background:#fff;border-radius:14px;padding:32px 28px;max-width:380px;width:100%;
+    text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.2);animation:pop .18s ease-out;}
+  @keyframes pop{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .status-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    margin:0 auto 16px;font-size:28px;color:#fff;}
+  .status-icon.success{background:var(--ktm-green);}
+  .status-icon.error{background:var(--ktm-red);}
+  .status-title{font-size:18px;font-weight:700;margin-bottom:6px;color:#212b36;}
+  .status-msg{font-size:14px;color:#5c6773;margin-bottom:22px;}
+  .status-btns{display:flex;gap:10px;justify-content:center;}
+  .status-btns button{border:none;border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer;}
+  .btn-ok{background:var(--ktm-blue);color:#fff;}
+  .btn-ok:hover{background:var(--ktm-blue-dark);}
+  .btn-retry{background:#eef1f4;color:#354150;}
+  .btn-retry:hover{background:#e0e5eb;}
+
+  @media (max-width:768px){
+    .card-body{flex-direction:column;}
+    .card-navi{width:100%;display:flex;gap:6px;overflow-x:auto;}
+    .card-navi a{white-space:nowrap;margin-bottom:0;}
+  }
+</style>
+</head>
+<body>
+  <div class="content-body">
+    <div class="card">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col-4 col-md-3">
+            <img src="https://www.ktmb.com.my/assets/img/logo_miniktm.png" alt="KTM Logo">
+          </div>
+          <div class="col-8 col-md-9">
+            <h4>Keretapi Tanah Melayu Berhad</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-navi">
+          <a href="index.html">Home</a>
+          <a href="server.html">Server</a>
+          <a href="log_data.html" class="active">Log Data</a>
+        </div>
+
+        <div class="card-form">
+          <form id="myForm" novalidate>
+
+            <div class="row mb-2">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="date" class="col-sm-4 col-form-label">Date</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="no_staff" class="col-sm-4 col-form-label">Created by</label>
+                  <div class="col-sm-8">
+                    <select id="no_staff" name="no_staff" class="form-control" required>
+                      <option value="">--</option>
+                      <option value="002299">AZIZAN ABAS</option>
+                      <option value="002244">SHAHARUDDIN SHAID</option>
+                      <option value="301009">MUHAMMAD HAFIZUL HAKIM</option>
+                      <option value="301026">AHMAD FADZELII</option>
+                      <option value="303547">HAZWAN</option>
+                      <option value="302289">AMIRUL SHAFIQ</option>
+                      <option value="304504">MUHAMMAD AZHAR</option>
+                      <option value="303230">AMIRUL AZRI</option>
+                      <option value="303229">MOHAMAD FADZLI</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title">SPOT Interface Batch</div>
+            <div class="sub-label">LOG (Date Hari Ini)</div>
+            <div class="sub-label" style="margin-top:0;font-weight:400;color:#8792a0;">01 – SPOT Interface Batch Programs &nbsp;·&nbsp; 06 – View Log</div>
+
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="invoice_interface" class="col-sm-4 col-form-label">01 – Invoice Interface</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="invoice_interface" name="invoice_interface" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="receipt_interface" class="col-sm-4 col-form-label">02 – Receipt Interface</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="receipt_interface" name="receipt_interface" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="customer_interface" class="col-sm-4 col-form-label">03 – Customer Interface</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="customer_interface" name="customer_interface" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title">SPOT General Batch Programs</div>
+            <div class="sub-label" style="margin-top:0;font-weight:400;color:#8792a0;">09 – View Log File</div>
+
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="generate_daily" class="col-sm-4 col-form-label">03 – Generate Daily Timetable</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="generate_daily" name="generate_daily" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="calculate_demurage" class="col-sm-4 col-form-label">06 – Calculate Demurage</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="calculate_demurage" name="calculate_demurage" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="populate_commuter" class="col-sm-4 col-form-label">07 – Populate Commuter Train</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="populate_commuter" name="populate_commuter" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title">Run (Date Semalam)</div>
+            <div class="sub-label" style="margin-top:0;font-weight:400;color:#8792a0;">03 – SPOT Report Batch Programs</div>
+
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="revenue_net" class="col-sm-4 col-form-label">03 – Revenue per Net Ton KM (Freight)</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="revenue_net" name="revenue_net" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="net_ton" class="col-sm-4 col-form-label">04 – Net Ton, Ton-KM by Commodity</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="net_ton" name="net_ton" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="revenue_freight" class="col-sm-4 col-form-label">06 – Revenue for Freight Train</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="revenue_freight" name="revenue_freight" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="perodial_freight" class="col-sm-4 col-form-label">07 – Periodical Freight Stats</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="perodial_freight" name="perodial_freight" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="punctually_data" class="col-sm-4 col-form-label">08 – Punctuality Data</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="punctually_data" name="punctually_data" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="locomotive_statistic" class="col-sm-4 col-form-label">09 – Locomotive Statistic</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="locomotive_statistic" name="locomotive_statistic" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="train_equipment" class="col-sm-4 col-form-label">11 – Train Equipment Tracking</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="train_equipment" name="train_equipment" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="mb-2 row align-items-center">
+                  <label for="turnaround_statistic" class="col-sm-4 col-form-label">13 – Turnaround Statistic</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="turnaround_statistic" name="turnaround_statistic" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mt-3">
+              <div class="col-sm-12 text-right">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                  <span id="submitLabel">Submit</span>
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status modal -->
+  <div class="status-overlay" id="statusOverlay">
+    <div class="status-box">
+      <div class="status-icon" id="statusIcon"></div>
+      <div class="status-title" id="statusTitle"></div>
+      <div class="status-msg" id="statusMsg"></div>
+      <div class="status-btns" id="statusBtns"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    // ---- CONFIG ----
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoM73yE1FtY3nERNE74KjdCkxdCCgLMEy2JfrfT38t8-52b4ugKDHU0zLNvs0IVkTRRA/exec';
+    const SUBMIT_TIMEOUT_MS = 20000;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Date field default + picker
+      const dateField = document.getElementById('date');
+      const today = new Date();
+      const formattedDate = today.getFullYear() + '-' +
+        String(today.getMonth() + 1).padStart(2, '0') + '-' +
+        String(today.getDate()).padStart(2, '0');
+      dateField.value = formattedDate;
+      flatpickr('#date', { dateFormat: 'Y-m-d', defaultDate: formattedDate });
+
+      const form = document.getElementById('myForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const submitLabel = document.getElementById('submitLabel');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Basic validation with visual feedback
+        let valid = true;
+        form.querySelectorAll('[required]').forEach(el => {
+          if (!el.value || el.value === '--') {
+            el.classList.add('is-invalid');
+            valid = false;
+          } else {
+            el.classList.remove('is-invalid');
+          }
+        });
+        if (!valid) {
+          showStatus({
+            type: 'error',
+            title: 'Missing information',
+            message: 'Please fill in all required fields before submitting.',
+            buttons: [{ label: 'OK', style: 'ok', action: hideStatus }]
+          });
+          return;
+        }
+
+        const formData = {
+          date: document.getElementById('date').value,
+          no_staff: document.getElementById('no_staff').value,
+          invoice_interface: document.getElementById('invoice_interface').value,
+          receipt_interface: document.getElementById('receipt_interface').value,
+          customer_interface: document.getElementById('customer_interface').value,
+          generate_daily: document.getElementById('generate_daily').value,
+          calculate_demurage: document.getElementById('calculate_demurage').value,
+          populate_commuter: document.getElementById('populate_commuter').value,
+          revenue_net: document.getElementById('revenue_net').value,
+          net_ton: document.getElementById('net_ton').value,
+          revenue_freight: document.getElementById('revenue_freight').value,
+          perodial_freight: document.getElementById('perodial_freight').value,
+          punctually_data: document.getElementById('punctually_data').value,
+          locomotive_statistic: document.getElementById('locomotive_statistic').value,
+          train_equipment: document.getElementById('train_equipment').value,
+          turnaround_statistic: document.getElementById('turnaround_statistic').value
+        };
+
+        submitForm(formData);
+      });
+
+      async function submitForm(formData) {
+        setSubmitting(true);
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+
+        try {
+          // IMPORTANT: text/plain avoids a CORS preflight that Apps Script can't answer.
+          // Apps Script still parses it as JSON via JSON.parse(e.postData.contents).
+          const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(formData),
+            signal: controller.signal
+          });
+
+          clearTimeout(timeoutId);
+
+          if (!response.ok) {
+            throw new Error('Server responded with status ' + response.status);
+          }
+
+          const raw = await response.text();
+          let result;
+          try {
+            result = JSON.parse(raw);
+          } catch (e) {
+            // Script didn't return JSON as expected
+            throw new Error('Unexpected response from server: ' + raw.slice(0, 200));
+          }
+
+          if (result.status === 'success') {
+            showStatus({
+              type: 'success',
+              title: 'Submitted successfully',
+              message: 'Your data has been recorded in the spreadsheet.',
+              buttons: [{
+                label: 'OK', style: 'ok',
+                action: () => { window.location.href = 'log_shiftpagi.html'; }
+              }]
+            });
+          } else {
+            throw new Error(result.message || 'The server reported an error saving your data.');
+          }
+
+        } catch (err) {
+          clearTimeout(timeoutId);
+          const isAbort = err.name === 'AbortError';
+          showStatus({
+            type: 'error',
+            title: isAbort ? 'Request timed out' : 'Submission failed',
+            message: isAbort
+              ? 'The server took too long to respond. Your data may not have been saved — please try again.'
+              : 'Your data was NOT saved to the spreadsheet. ' + (err.message || ''),
+            buttons: [
+              { label: 'Retry', style: 'retry', action: () => { hideStatus(); submitForm(formData); } },
+              { label: 'Close', style: 'ok', action: hideStatus }
+            ]
+          });
+        } finally {
+          setSubmitting(false);
+        }
+      }
+
+      function setSubmitting(isSubmitting) {
+        submitBtn.disabled = isSubmitting;
+        submitLabel.innerHTML = isSubmitting
+          ? '<span class="spinner"></span> Submitting…'
+          : 'Submit';
+      }
+    });
+
+    // ---- Status modal helpers ----
+    function showStatus({ type, title, message, buttons }) {
+      const overlay = document.getElementById('statusOverlay');
+      const icon = document.getElementById('statusIcon');
+      const titleEl = document.getElementById('statusTitle');
+      const msgEl = document.getElementById('statusMsg');
+      const btnsEl = document.getElementById('statusBtns');
+
+      icon.className = 'status-icon ' + type;
+      icon.textContent = type === 'success' ? '✓' : '✕';
+      titleEl.textContent = title;
+      msgEl.textContent = message;
+
+      btnsEl.innerHTML = '';
+      buttons.forEach(b => {
+        const btn = document.createElement('button');
+        btn.textContent = b.label;
+        btn.className = b.style === 'retry' ? 'btn-retry' : 'btn-ok';
+        btn.onclick = b.action;
+        btnsEl.appendChild(btn);
+      });
+
+      overlay.classList.add('show');
+    }
+    function hideStatus() {
+      document.getElementById('statusOverlay').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

@@ -352,16 +352,21 @@
       loadCurrentTab(false);
     }
 
+    const SHEET_TIMEZONE = 'Asia/Kuala_Lumpur';
+
     function formatDate(rawDate) {
       const d = new Date(rawDate);
       if (isNaN(d.getTime())) return String(rawDate);
-      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      // Force display in the spreadsheet's timezone so the calendar day is
+      // never off by one for viewers in a different timezone than KL.
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: SHEET_TIMEZONE });
     }
 
     function toInputDate(rawDate) {
       const d = new Date(rawDate);
       if (isNaN(d.getTime())) return '';
-      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      // en-CA locale gives YYYY-MM-DD directly, computed in KL time.
+      return d.toLocaleDateString('en-CA', { timeZone: SHEET_TIMEZONE });
     }
 
     function renderLoading() {

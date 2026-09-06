@@ -11,6 +11,7 @@
     --ktm-blue-dark:#083b68;
     --ktm-blue-light:#e8f1f9;
     --ktm-red:#c0392b;
+    --ktm-red-light:#fdf1ef;
     --ktm-green:#1e8e3e;
     --bg:#f2f4f7;
   }
@@ -46,6 +47,15 @@
   .btn-refresh.spinning svg{animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
+  /* Toast */
+  .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-20px);
+    background:#212b36;color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;font-weight:600;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:1200;opacity:0;transition:opacity .2s,transform .2s;
+    display:flex;align-items:center;gap:8px;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast.success{background:var(--ktm-green);}
+  .toast.error{background:var(--ktm-red);}
+
   /* Tabs */
   .tabs{display:flex;gap:6px;background:#fff;border:1px solid #e3e6ea;border-radius:10px;padding:5px;margin-bottom:18px;width:fit-content;}
   .tab-btn{border:none;background:transparent;padding:9px 18px;border-radius:7px;font-size:13.5px;
@@ -69,12 +79,18 @@
   }
   .cell-date{font-weight:700;color:#212b36;white-space:nowrap;}
   .cell-muted{color:#8792a0;}
+  .row-actions{display:flex;gap:6px;justify-content:flex-end;}
 
-  .btn-view{
-    background:var(--ktm-blue-light);color:var(--ktm-blue);border:none;padding:6px 14px;
-    border-radius:7px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;
+  .btn-icon{
+    border:none;padding:6px 12px;border-radius:7px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;
   }
+  .btn-view{background:var(--ktm-blue-light);color:var(--ktm-blue);}
   .btn-view:hover{background:#d5e5f3;}
+  .btn-edit{background:#fbf1e3;color:#b6791b;}
+  .btn-edit:hover{background:#f6e4c6;}
+  .btn-delete{background:var(--ktm-red-light);color:var(--ktm-red);}
+  .btn-delete:hover{background:#f9dcd6;}
+  .btn-icon:disabled{opacity:.5;cursor:not-allowed;}
 
   /* Pagination */
   .pagination-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;
@@ -104,7 +120,7 @@
     font-weight:600;font-size:13px;cursor:pointer;}
   .btn-retry-inline:hover{background:#a5332a;}
 
-  /* Modal */
+  /* Modal (view / edit) */
   .modal-overlay{position:fixed;inset:0;background:rgba(20,26,33,.5);display:none;
     align-items:center;justify-content:center;z-index:1000;padding:16px;}
   .modal-overlay.show{display:flex;}
@@ -112,27 +128,56 @@
     overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,.2);animation:pop .18s ease-out;}
   @keyframes pop{from{transform:scale(.95);opacity:0;}to{transform:scale(1);opacity:1;}}
   .modal-top{background:var(--ktm-blue-light);padding:18px 22px;display:flex;align-items:center;
-    justify-content:space-between;position:sticky;top:0;}
+    justify-content:space-between;position:sticky;top:0;gap:10px;}
+  .modal-top.edit-mode{background:#fbf1e3;}
   .modal-top .modal-date{font-size:16px;font-weight:700;color:#212b36;}
   .modal-top .modal-close{background:none;border:none;font-size:20px;color:#5c6a7a;cursor:pointer;
-    width:32px;height:32px;border-radius:8px;}
-  .modal-top .modal-close:hover{background:rgba(11,79,138,.1);}
+    width:32px;height:32px;border-radius:8px;flex-shrink:0;}
+  .modal-top .modal-close:hover{background:rgba(0,0,0,.08);}
   .modal-body{padding:6px 22px 20px;}
   .group-title{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ktm-blue);
     font-weight:700;margin:18px 0 4px;padding-bottom:6px;border-bottom:1px solid #eef1f5;}
   .group-title:first-of-type{margin-top:14px;}
-  .field-row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #f5f6f8;}
+  .field-row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #f5f6f8;align-items:center;}
   .field-row:last-child{border-bottom:none;}
-  .field-row .field-label{font-size:13.5px;color:#6b7785;max-width:60%;}
+  .field-row .field-label{font-size:13.5px;color:#6b7785;max-width:55%;}
   .field-row .field-value{font-size:14px;font-weight:600;color:#212b36;text-align:right;word-break:break-word;}
   .field-row .field-value.empty{color:#b0b8c1;font-weight:400;font-style:italic;}
+  .field-row input{
+    flex:1;max-width:60%;padding:7px 10px;border:1px solid #d7dce2;border-radius:7px;font-size:13.5px;
+    text-align:right;color:#212b36;
+  }
+  .field-row input:focus{outline:none;border-color:var(--ktm-blue);box-shadow:0 0 0 .15rem rgba(11,79,138,.15);}
+
+  .modal-footer{padding:14px 22px 20px;display:flex;gap:10px;justify-content:flex-end;border-top:1px solid #f0f2f5;}
+  .modal-footer button{border:none;border-radius:8px;padding:10px 18px;font-weight:600;font-size:13.5px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;}
+  .btn-save{background:var(--ktm-blue);color:#fff;}
+  .btn-save:hover:not(:disabled){background:var(--ktm-blue-dark);}
+  .btn-save:disabled{background:#9fb3c8;cursor:not-allowed;}
+  .btn-cancel{background:#eef1f4;color:#354150;}
+  .btn-cancel:hover{background:#e0e5eb;}
+  .btn-edit-open{background:#fbf1e3;color:#b6791b;}
+  .btn-edit-open:hover{background:#f6e4c6;}
+  .btn-delete-open{background:var(--ktm-red-light);color:var(--ktm-red);}
+  .btn-delete-open:hover{background:#f9dcd6;}
+  .spinner-sm{width:13px;height:13px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;
+    border-radius:50%;animation:spin .7s linear infinite;}
+
+  /* Confirm delete modal */
+  .confirm-box{max-width:360px;text-align:center;padding:28px 24px;}
+  .confirm-box .confirm-icon{width:48px;height:48px;border-radius:50%;background:var(--ktm-red);color:#fff;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:20px;}
+  .confirm-box h6{margin:0 0 6px;font-weight:700;color:#212b36;font-size:16px;}
+  .confirm-box p{margin:0 0 20px;font-size:13.5px;color:#6b7785;}
+  .confirm-box .confirm-btns{display:flex;gap:10px;justify-content:center;}
 
   @media (max-width:768px){
     .card-body{flex-direction:column;}
     .card-navi{width:100%;display:flex;gap:6px;overflow-x:auto;}
     .card-navi a{white-space:nowrap;margin-bottom:0;}
     .table-wrap{overflow-x:auto;}
-    table{min-width:520px;}
+    table{min-width:560px;}
   }
 </style>
 </head>
@@ -180,25 +225,47 @@
     </div>
   </div>
 
-  <!-- Detail modal -->
-  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <!-- View / Edit modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this && !isSaving) closeModal()">
     <div class="modal-box">
-      <div class="modal-top">
+      <div class="modal-top" id="modalTop">
         <span class="modal-date" id="modalDate"></span>
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter"></div>
     </div>
   </div>
 
+  <!-- Delete confirmation modal -->
+  <div class="modal-overlay" id="confirmOverlay">
+    <div class="modal-box confirm-box">
+      <div class="confirm-icon">✕</div>
+      <h6>Delete this submission?</h6>
+      <p id="confirmDate"></p>
+      <div class="confirm-btns">
+        <button class="btn-cancel" style="border:none;border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer;" onclick="closeConfirm()">Cancel</button>
+        <button class="btn-save" id="confirmDeleteBtn" style="background:var(--ktm-red);border:none;border-radius:8px;padding:10px 18px;font-weight:600;color:#fff;cursor:pointer;" onclick="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7UloeZb2pIGS6TvyC1mlvgHk3m7BnrOCrvkS6c8RWj8lIR4R9CyboAKV4ruVvD-NsGg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwp9iMRY4Nh9nJqFVtZ9SHhUjBOH06iTuSjrgSmA2PxTsCnqEcPtc1WynW4gS5FLJeumw/exec';
     const PAGE_SIZE = 10;
 
-    // Column config per sheet: [rowIndex, columnHeaderLabel]
+    // Column config per sheet.
+    // fieldKeys[idx] gives the field name expected by the backend for that row index.
     const CONFIG = {
       spot: {
         title: 'SPOT Interface Batch',
+        sheetParam: 'spot',
+        fieldKeys: ['date','invoice_interface','receipt_interface','customer_interface',
+          'generate_daily','calculate_demurage','populate_commuter','revenue_net','net_ton',
+          'revenue_freight','perodial_freight','punctually_data','locomotive_statistic',
+          'train_equipment','turnaround_statistic','no_staff'],
         summaryCols: [
           { idx: 1, label: 'Invoice Interface' },
           { idx: 6, label: 'Populate Commuter' },
@@ -225,11 +292,17 @@
               [13,'11 – Train Equipment Tracking'],
               [14,'13 – Turnaround Statistic']
             ]
+          },
+          {
+            title: 'Meta',
+            fields: [[15,'Created By']]
           }
         ]
       },
       finance: {
         title: 'Finance Interface Batch',
+        sheetParam: 'finance',
+        fieldKeys: ['date','update_customer','update_natural','update_cost','update_exchange','customer_data','no_staff'],
         summaryCols: [
           { idx: 1, label: 'Update Customer' },
           { idx: 5, label: 'Customer Interface' },
@@ -248,6 +321,10 @@
           {
             title: 'Spot Interface (10.0.150.103)',
             fields: [[5,'03 – Customer Interface']]
+          },
+          {
+            title: 'Meta',
+            fields: [[6,'Created By']]
           }
         ]
       }
@@ -255,11 +332,17 @@
 
     let currentSheet = 'spot';
     let currentPage = 1;
-    const cache = { spot: null, finance: null };
+    let isSaving = false;
+    let modalMode = 'view'; // 'view' | 'edit'
+    let activeGlobalIndex = null;
+    let pendingDeleteIndex = null;
+    const cache = { spot: null, finance: null }; // arrays of {rowNumber, values}
 
     const contentEl = document.getElementById('content');
     const statusEl = document.getElementById('statusText');
     const refreshBtn = document.getElementById('refreshBtn');
+
+    // ---------- Tabs & data loading ----------
 
     function switchTab(sheet) {
       currentSheet = sheet;
@@ -273,6 +356,12 @@
       const d = new Date(rawDate);
       if (isNaN(d.getTime())) return String(rawDate);
       return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function toInputDate(rawDate) {
+      const d = new Date(rawDate);
+      if (isNaN(d.getTime())) return '';
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
     }
 
     function renderLoading() {
@@ -313,7 +402,7 @@
       refreshBtn.classList.add('spinning');
 
       try {
-        const response = await fetch(SCRIPT_URL + '?sheet=' + currentSheet);
+        const response = await fetch(SCRIPT_URL + '?sheet=' + CONFIG[currentSheet].sheetParam);
         if (!response.ok) throw new Error('Server responded with status ' + response.status);
 
         const data = await response.json();
@@ -327,9 +416,9 @@
           return;
         }
 
-        // Skip header row(s) where col 0 isn't a parseable date
-        const rows = data.filter(row => !isNaN(new Date(row[0]).getTime()));
-        const sorted = rows.slice().sort((a, b) => new Date(b[0]) - new Date(a[0]));
+        // Expect [{rowNumber, values}, ...]. Skip rows where values[0] isn't a parseable date (header row).
+        const rows = data.filter(item => item && item.values && !isNaN(new Date(item.values[0]).getTime()));
+        const sorted = rows.slice().sort((a, b) => new Date(b.values[0]) - new Date(a.values[0]));
 
         cache[currentSheet] = sorted;
 
@@ -349,6 +438,8 @@
       }
     }
 
+    // ---------- Table rendering ----------
+
     function renderTable() {
       const rows = cache[currentSheet] || [];
       const config = CONFIG[currentSheet];
@@ -360,8 +451,9 @@
 
       const headerCells = config.summaryCols.map(c => `<th>${c.label}</th>`).join('');
 
-      const bodyRows = pageRows.map((row, i) => {
+      const bodyRows = pageRows.map((item, i) => {
         const globalIndex = start + i;
+        const row = item.values;
         const cells = config.summaryCols.map(c => {
           const val = row[c.idx];
           const hasValue = val !== undefined && val !== null && String(val).trim() !== '';
@@ -372,7 +464,13 @@
           <tr>
             <td class="cell-date">${formatDate(row[0])}${globalIndex === 0 ? '<span class="badge-newest">Latest</span>' : ''}</td>
             ${cells}
-            <td><button class="btn-view" onclick="viewRow(${globalIndex})">View</button></td>
+            <td>
+              <div class="row-actions">
+                <button class="btn-icon btn-view" onclick="openView(${globalIndex})">View</button>
+                <button class="btn-icon btn-edit" onclick="openEdit(${globalIndex})">Edit</button>
+                <button class="btn-icon btn-delete" onclick="openConfirm(${globalIndex})">Delete</button>
+              </div>
+            </td>
           </tr>`;
       }).join('');
 
@@ -411,31 +509,206 @@
       renderTable();
     }
 
-    function viewRow(globalIndex) {
-      const row = cache[currentSheet][globalIndex];
-      const config = CONFIG[currentSheet];
+    // ---------- View / Edit modal ----------
 
-      document.getElementById('modalDate').textContent = formatDate(row[0]);
+    function openView(globalIndex) {
+      activeGlobalIndex = globalIndex;
+      modalMode = 'view';
+      renderModal();
+      document.getElementById('modalOverlay').classList.add('show');
+    }
+
+    function openEdit(globalIndex) {
+      activeGlobalIndex = globalIndex;
+      modalMode = 'edit';
+      renderModal();
+      document.getElementById('modalOverlay').classList.add('show');
+    }
+
+    function closeModal() {
+      if (isSaving) return;
+      document.getElementById('modalOverlay').classList.remove('show');
+      activeGlobalIndex = null;
+    }
+
+    function renderModal() {
+      const item = cache[currentSheet][activeGlobalIndex];
+      const row = item.values;
+      const config = CONFIG[currentSheet];
+      const isEdit = modalMode === 'edit';
+
+      document.getElementById('modalTop').classList.toggle('edit-mode', isEdit);
+      document.getElementById('modalDate').textContent = isEdit ? 'Edit submission' : formatDate(row[0]);
 
       const groupsHtml = config.groups.map(group => {
         const rowsHtml = group.fields.map(([idx, label]) => {
           const value = row[idx];
           const hasValue = value !== undefined && value !== null && String(value).trim() !== '';
+
+          if (!isEdit) {
+            return `
+              <div class="field-row">
+                <div class="field-label">${label}</div>
+                <div class="field-value ${hasValue ? '' : 'empty'}">${hasValue ? value : '—'}</div>
+              </div>`;
+          }
+
+          if (idx === 0) {
+            return `
+              <div class="field-row">
+                <div class="field-label">${label}</div>
+                <input type="date" data-field-idx="${idx}" value="${toInputDate(value)}">
+              </div>`;
+          }
+
+          const escaped = hasValue ? String(value).replace(/"/g, '&quot;') : '';
           return `
             <div class="field-row">
               <div class="field-label">${label}</div>
-              <div class="field-value ${hasValue ? '' : 'empty'}">${hasValue ? value : '—'}</div>
+              <input type="text" data-field-idx="${idx}" value="${escaped}">
             </div>`;
         }).join('');
         return `<div class="group-title">${group.title}</div>${rowsHtml}`;
       }).join('');
 
       document.getElementById('modalBody').innerHTML = groupsHtml;
-      document.getElementById('modalOverlay').classList.add('show');
+
+      const footer = document.getElementById('modalFooter');
+      if (isEdit) {
+        footer.innerHTML = `
+          <button class="btn-cancel" onclick="cancelEdit()">Cancel</button>
+          <button class="btn-save" id="saveBtn" onclick="saveEdit()"><span id="saveLabel">Save changes</span></button>`;
+      } else {
+        footer.innerHTML = `
+          <button class="btn-delete-open" onclick="openConfirm(${activeGlobalIndex}); closeModal();">Delete</button>
+          <button class="btn-edit-open" onclick="openEdit(${activeGlobalIndex})">Edit</button>`;
+      }
     }
 
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('show');
+    function cancelEdit() {
+      modalMode = 'view';
+      renderModal();
+    }
+
+    async function saveEdit() {
+      const config = CONFIG[currentSheet];
+      const item = cache[currentSheet][activeGlobalIndex];
+      const inputs = document.querySelectorAll('#modalBody [data-field-idx]');
+
+      const newValues = item.values.slice();
+      inputs.forEach(inp => {
+        const idx = parseInt(inp.getAttribute('data-field-idx'), 10);
+        newValues[idx] = inp.value;
+      });
+
+      // Build payload keyed by field name, as the backend expects.
+      const payload = { action: 'update', sheet: config.sheetParam, rowNumber: item.rowNumber };
+      config.fieldKeys.forEach((key, idx) => { payload[key] = newValues[idx]; });
+
+      const missing = config.fieldKeys.filter(k => !payload[k]);
+      if (missing.length > 0) {
+        showToast('error', 'Please fill in all fields before saving.');
+        return;
+      }
+
+      isSaving = true;
+      const saveBtn = document.getElementById('saveBtn');
+      const saveLabel = document.getElementById('saveLabel');
+      saveBtn.disabled = true;
+      saveLabel.innerHTML = '<span class="spinner-sm"></span> Saving…';
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error('Server responded with status ' + response.status);
+
+        const raw = await response.text();
+        const result = JSON.parse(raw);
+        if (result.status !== 'success') throw new Error(result.message || 'Update failed.');
+
+        item.values = newValues;
+        showToast('success', 'Submission updated.');
+        modalMode = 'view';
+        renderModal();
+        renderTable();
+
+      } catch (err) {
+        console.error(err);
+        showToast('error', 'Could not save changes: ' + err.message);
+      } finally {
+        isSaving = false;
+        saveBtn.disabled = false;
+        saveLabel.textContent = 'Save changes';
+      }
+    }
+
+    // ---------- Delete confirmation ----------
+
+    function openConfirm(globalIndex) {
+      pendingDeleteIndex = globalIndex;
+      const item = cache[currentSheet][globalIndex];
+      document.getElementById('confirmDate').textContent =
+        `${formatDate(item.values[0])} — this cannot be undone.`;
+      document.getElementById('confirmOverlay').classList.add('show');
+    }
+
+    function closeConfirm() {
+      pendingDeleteIndex = null;
+      document.getElementById('confirmOverlay').classList.remove('show');
+    }
+
+    async function confirmDelete() {
+      if (pendingDeleteIndex === null) return;
+      const config = CONFIG[currentSheet];
+      const item = cache[currentSheet][pendingDeleteIndex];
+      const btn = document.getElementById('confirmDeleteBtn');
+      btn.disabled = true;
+      btn.textContent = 'Deleting…';
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'delete', sheet: config.sheetParam, rowNumber: item.rowNumber })
+        });
+        if (!response.ok) throw new Error('Server responded with status ' + response.status);
+
+        const raw = await response.text();
+        const result = JSON.parse(raw);
+        if (result.status !== 'success') throw new Error(result.message || 'Delete failed.');
+
+        cache[currentSheet].splice(pendingDeleteIndex, 1);
+        showToast('success', 'Submission deleted.');
+        closeConfirm();
+        closeModal();
+
+        if (cache[currentSheet].length === 0) {
+          renderEmpty();
+        } else {
+          renderTable();
+        }
+
+      } catch (err) {
+        console.error(err);
+        showToast('error', 'Could not delete: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Delete';
+      }
+    }
+
+    // ---------- Toast ----------
+
+    let toastTimeout = null;
+    function showToast(type, message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast show ' + type;
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3200);
     }
 
     loadCurrentTab(false);
